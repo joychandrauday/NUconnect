@@ -4,6 +4,7 @@ import "react-multi-carousel/lib/styles.css";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import { useQuery } from "@tanstack/react-query";
 import icon from "../../../assets/images/connections.png"
+import { Link } from "react-router-dom";
 
 const SyllabusHomeSlider = () => {
   const axiosSecure = useAxiosSecure();
@@ -30,7 +31,6 @@ const SyllabusHomeSlider = () => {
   if (isError) {
     return <div>Error fetching packages data</div>;
   }
-  console.log(subjects);
   return (
     <div>
       <Carousel
@@ -89,10 +89,10 @@ const SyllabusHomeSlider = () => {
         {
           subjects.map((subject) =>{
             return (
-              <div key={subject._id}>
-                <img src={subject.icon} alt={subject.subjectName} />
-                <h3>{subject.subjectName}</h3>
-              </div>
+              <Link to={`/syllabus/${subject.slug}`} key={subject._id} className="bg-accent p-4 flex flex-col items-center justify-center h-full hover:scale-95 gap-2">
+                <img src={subject.icon} alt={subject.subjectName} className="w-2/6"/>
+                <h3 className="text-2xl font-bold ">{subject.subjectName}({subject.subjectCode})</h3>
+              </Link>
             )
           })
         }

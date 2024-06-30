@@ -45,6 +45,7 @@ async function run() {
 
   //database collection
   const subjectCollection = client.db("nuconnect").collection("subjects");
+  const detailedSyllCollection = client.db("nuconnect").collection("detailedSyllabus");
   
   
   try {
@@ -103,6 +104,23 @@ async function run() {
     app.get("/subjects", async (req, res) => {
       const cursor = subjectCollection.find();
       const result = await cursor.toArray();
+      res.send(result);
+    });
+    app.get("/detailed-syllabus", async (req, res) => {
+      const cursor = detailedSyllCollection.find();
+      const result = await cursor.toArray();
+      res.send(result);
+    });
+    app.get("/detailed-syllabus/:slug", async (req, res) => {
+      const slug = req.params.slug;
+      const query = { slug: slug };
+      const result = await detailedSyllCollection.findOne(query);
+      res.send(result);
+    });
+    app.get("/subject/:slug", async (req, res) => {
+      const slug = req.params.slug;
+      const query = { slug: slug };
+      const result = await subjectCollection.findOne(query);
       res.send(result);
     });
 
