@@ -1,0 +1,5 @@
+.menu li > *:not(ul, .menu-title, details, .btn):active, .menu li > *:not(ul, .menu-title, details, .btn).active, .menu li > details > summary:active{
+    border-radius: 0px;
+    background-color: #003366;
+    color: white;
+}
