@@ -17,9 +17,9 @@ const SingleDetailSyllabus = ({ courses }) => {
             </tr>
           </thead>
           <tbody>
-            {courses.map((course, index) => (
+            {
+            courses.map((course, index) => (
               <tr key={course.courseCode} className="text-center">
-                
                 <th>{index + 1}</th>
                 <td>{course.courseTitle}</td>
                 <td>{course.marks}</td>
@@ -30,17 +30,15 @@ const SingleDetailSyllabus = ({ courses }) => {
                     course details
                   </div>
                   <div className="collapse-content w-full">
-                    {
-                        course.topics.map((desc, index) => (
-                          <p key={index} className="bg-accent p-2 mb-1 text-white">{index+1}. {desc}</p>
-                        ))
-                    }
+                    {course.topics?.map((desc, index) => (
+                      <p key={index} className="bg-accent p-2 mb-1 text-white">
+                        {index + 1}. {desc}
+                      </p>
+                    ))}
                   </div>
                 </div>
               </tr>
             ))}
-            {/* row 1 */}
-            {/* row 2 */}
           </tbody>
         </table>
       </div>

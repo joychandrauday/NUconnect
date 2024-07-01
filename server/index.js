@@ -3,7 +3,7 @@ const app = express()
 require('dotenv').config()
 const cors = require('cors')
 const cookieParser = require('cookie-parser')
-const { MongoClient, ServerApiVersion } = require('mongodb')
+const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb')
 const jwt = require('jsonwebtoken')
 const morgan = require('morgan')
 const port = process.env.PORT || 8000
@@ -46,6 +46,7 @@ async function run() {
   //database collection
   const subjectCollection = client.db("nuconnect").collection("subjects");
   const detailedSyllCollection = client.db("nuconnect").collection("detailedSyllabus");
+  const courseCollection = client.db("nuconnect").collection("courses");
   
   
   try {
@@ -125,7 +126,30 @@ async function run() {
     });
 
     //subjects list handling
-
+    //course collection handling
+    app.get("/courses", async (req, res) => {
+      const cursor = courseCollection.find();
+      const result = await cursor.toArray();
+      res.send(result);
+    });
+    app.get("/course/:id", async (req, res) => {
+      const id = req.params.id;
+      const query = { _id:new ObjectId(id)  };
+      const result = await courseCollection.findOne(query);
+      res.send(result);
+    });
+    app.get("/courses/:department", async (req, res) => {
+      try {
+        const name = req.params.department;
+        const query = { department: name };
+        const result = await courseCollection.find(query).toArray();
+        res.send(result);
+      } catch (error) {
+        console.error(error);
+        res.status(500).send("Internal Server Error");
+      }
+    });
+    //course collection handling
     // Send a ping to confirm a successful connection
     await client.db('admin').command({ ping: 1 })
     console.log(

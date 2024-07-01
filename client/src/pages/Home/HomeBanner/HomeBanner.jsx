@@ -35,8 +35,8 @@ const HomeBanner = () => {
                 <Link to={'/syllabus'} className="btn border-none rounded-none hover:bg-accent hover:text-black bg-[#0058b1] shadow-md mr-3 shadow-black text-white">
                     NU All Syllabus
                 </Link>
-                <Link to={'/notice'} className="btn border-none rounded-none hover:bg-accent hover:text-black bg-[#0058b1] shadow-md mr-3 shadow-black text-white">
-                    Live Courses
+                <Link to={'/courses'} className="btn border-none rounded-none hover:bg-accent hover:text-black bg-[#0058b1] shadow-md mr-3 shadow-black text-white">
+                    Academic Courses
                 </Link>
                 <Link to={'/notice'} className="btn border-none rounded-none hover:bg-accent hover:text-black bg-[#0058b1] shadow-md mr-3 shadow-black text-white">
                     All Notice
