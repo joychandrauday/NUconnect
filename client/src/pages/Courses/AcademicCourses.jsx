@@ -37,6 +37,7 @@ const AcademicCourses = () => {
         {
             courses.map(course =>(
                 <SingleCourse course={course} key={course._id}/>
+                // console.log(course.course)
             ))
         }
       </div>
