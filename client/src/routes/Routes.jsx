@@ -41,6 +41,14 @@ export const router = createBrowserRouter([
         path: "/courses/:department",
         element: <DepartMentWise />,
       },
+      {
+        path: "/instructors",
+        element: <DepartMentWise />,
+      },
+      {
+        path: "/instructors/:id",
+        element: <DepartMentWise />,
+      },
     ],
   },
   { path: "/login", element: <Login /> },

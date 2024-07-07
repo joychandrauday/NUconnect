@@ -37,10 +37,9 @@ const AllSyllabusPage = () => {
           <Link
             to={`/syllabus/${subject.slug}`}
             key={subject._id}
-            className="border-4 border-gray-600 p-4 my-4 flex flex-col gap-2 items-center justify-center text-white relative group hover:bg-black "
+            className=" p-4 my-4 flex flex-col gap-2 items-center justify-center text-white relative group hover:bg-black "
             style={{
-              background:
-                "linear-gradient(342deg, rgba(103,80,121,1) 0%, rgba(190,23,23,1) 41%, rgba(13,90,106,1) 100%)",
+              'background': 'linear-gradient(109.6deg, rgba(0, 0, 0, 0.93) 11.2%, rgb(63, 61, 61) 78.9%)'
             }}
           >
             <img
@@ -49,7 +48,7 @@ const AllSyllabusPage = () => {
               className="w-2/6 bg-white p-2 rounded shadow-sm"
             />
             <p className="text-2xl font-bold ">{subject.subjectName}</p>
-            <div className="flex font-bold opacity-0 group-hover:opacity-100 transition-opacity duration-300 absolute bg-[#801111d5] w-full h-full items-center justify-center">
+            <div className="flex font-bold opacity-0 group-hover:opacity-100 transition-opacity duration-300 absolute bg-primary bg-opacity-50 w-full h-full items-center justify-center">
               View Details
             </div>
           </Link>

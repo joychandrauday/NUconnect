@@ -9,7 +9,7 @@ const SingleDetailSyllabus = ({ courses }) => {
           {/* head */}
           <thead>
             <tr className="text-center">
-              <th>index</th>
+              <th>Course Code</th>
               <th>Course Title</th>
               <th>Marks</th>
               <th>Credit</th>
@@ -18,9 +18,9 @@ const SingleDetailSyllabus = ({ courses }) => {
           </thead>
           <tbody>
             {
-            courses.map((course, index) => (
+            courses.map((course) => (
               <tr key={course.courseCode} className="text-center">
-                <th>{index + 1}</th>
+                <th>{course.courseCode}</th>
                 <td>{course.courseTitle}</td>
                 <td>{course.marks}</td>
                 <td>{course.credits}</td>
