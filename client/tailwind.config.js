@@ -10,7 +10,7 @@ export default {
         // Configure your color palette here
         primary: '#003366',
         secondary: '#66B2FF',
-        accent: '#99CC33',
+        accent: '#F89D04',
         neutral: '#333333',
         neutralop: '#212121',
         basic: "#00008b",

@@ -10,6 +10,8 @@ import AcademicCourses from "../pages/Courses/AcademicCourses";
 import SingleCourse from "../pages/Courses/SingleCourse";
 import CourseDetails from "../pages/Courses/CourseDetails";
 import DepartMentWise from "../pages/Courses/DepartMentWise";
+import Instructors from "../pages/Instructors/Instructors";
+import InstructorsDetails from "../pages/Instructors/InstructorsDetails";
 
 export const router = createBrowserRouter([
   {
@@ -43,11 +45,11 @@ export const router = createBrowserRouter([
       },
       {
         path: "/instructors",
-        element: <DepartMentWise />,
+        element: <Instructors />,
       },
       {
-        path: "/instructors/:id",
-        element: <DepartMentWise />,
+        path: "/instructor/:id",
+        element: <InstructorsDetails />,
       },
     ],
   },

@@ -32,7 +32,7 @@ const AllSyllabusPage = () => {
       <h1 className="text-3xl font-bold text-center pt-4 pb-10 capitalize">
         Depertment Wise Syllabus.({subjects.length})
       </h1>
-      <div className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 container mx-auto gap-4">
+      <div className="grid lg:grid-cols-4 md:grid-cols-2 grid-cols-1 container mx-auto gap-4">
         {subjects.map((subject) => (
           <Link
             to={`/syllabus/${subject.slug}`}
@@ -48,7 +48,7 @@ const AllSyllabusPage = () => {
               className="w-2/6 bg-white p-2 rounded shadow-sm"
             />
             <p className="text-2xl font-bold ">{subject.subjectName}</p>
-            <div className="flex font-bold opacity-0 group-hover:opacity-100 transition-opacity duration-300 absolute bg-primary bg-opacity-50 w-full h-full items-center justify-center">
+            <div className="flex font-bold opacity-0 group-hover:opacity-100 transition-opacity duration-300 absolute bg-primary bg-opacity-90 w-full h-full items-center justify-center">
               View Details
             </div>
           </Link>
