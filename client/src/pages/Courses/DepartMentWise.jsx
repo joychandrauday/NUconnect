@@ -36,7 +36,7 @@ const DepartMentWise = () => {
         <h1 className="text-3xl font-bold text-center pt-4 pb-10 capitalize">
           All Courses.
         </h1>
-        <div className="grid grid-cols-3 gap-4">
+        <div className="grid grid-cols-3 gap-4 container mx-auto">
           {courses.map((course) => (
             <SingleCourse course={course} key={course._id} />
           ))}

@@ -2,8 +2,7 @@ import React from "react";
 import { Link, ScrollRestoration, useNavigate, useParams } from "react-router-dom";
 import useAxiosPublic from "../../hooks/useAxiosPublic";
 import { useQuery } from "@tanstack/react-query";
-import { TbClock, TbPlayerPlay, TbStar, TbUser } from "react-icons/tb";
-import { ImCross } from "react-icons/im";
+
 import {
   FaCheck,
   FaClock,
@@ -17,6 +16,7 @@ import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
 import "react-tabs/style/react-tabs.css";
 import { RxCrossCircled } from "react-icons/rx";
 import { MdQuiz } from "react-icons/md";
+import TeacherComponent from "./TeacherComponent";
 
 const CourseDetails = () => {
   const { id } = useParams();
@@ -213,26 +213,12 @@ const CourseDetails = () => {
                 </TabPanel>
 
                 <TabPanel>
-                  <div key={instructor.id}>
+                  <div key={instructor}>
                     <Link
-                      to={`/instructor/${instructor.id}`}
+                      to={`/instructor/${instructor}`}
                       className="card bg-base-100 hover:translate-y-[-4px] transition-translate hover:shadow-primary duration-300 shadow-lg border mb-4"
                     >
-                      <div className="card-body">
-                        <div className="flex items-center gap-6">
-                          <img
-                            src={instructor.profilePicture}
-                            alt={instructor.name}
-                            className="w-16 h-16 rounded-full object-cover"
-                          />
-                          <div>
-                            <h2 className="card-title">{instructor.name}</h2>
-                            <p className="text-sm text-gray-800">
-                              {instructor.bio}
-                            </p>
-                          </div>
-                        </div>
-                      </div>
+                      <TeacherComponent instructor={instructor}/>
                     </Link>
                   </div>
                 </TabPanel>

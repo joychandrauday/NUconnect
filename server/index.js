@@ -121,6 +121,39 @@ async function run() {
       const result = await detailedSyllCollection.findOne(query);
       res.send(result);
     });
+    app.post("/detailed-syllabus", async (req, res) => {
+      const syllabus = req.body;
+      const result = await detailedSyllCollection.insertOne(syllabus);
+      res.send(result);
+    });
+
+    app.put("/detailed-syllabus/courses/:courseCode", (req, res) => {
+      const courseCode = req.params.courseCode;
+      const updatedCourse = req.body;
+      
+      // Find the course by courseCode and update it
+      let found = false;
+      detailedSyllCollection.forEach((syllabus) => {
+        if (syllabus.details && syllabus.details.firstYear && syllabus.details.firstYear.courses[0]) {
+          const courses = syllabus.details.firstYear.courses;
+          const courseIndex = courses.findIndex((course) => course.courseCode === courseCode);
+          if (courseIndex !== -1) {
+            // Update the course with updatedCourse
+            courses[courseIndex] = updatedCourse;
+            found = true;
+            return;
+          }
+        }
+        // Add checks for other years (secondYear, thirdYear, fourthYear) if needed
+      });
+    
+      if (found) {
+        res.status(200).json({ message: "Course updated successfully", updatedCourse });
+      } else {
+        res.status(404).json({ message: "Course not found" });
+      }
+    });
+    
     app.get("/subject/:slug", async (req, res) => {
       const slug = req.params.slug;
       const query = { slug: slug };
@@ -152,6 +185,11 @@ async function run() {
         res.status(500).send("Internal Server Error");
       }
     });
+    app.post("/courses", async (req, res) => {
+      const course = req.body;
+      const result = await courseCollection.insertOne(course);
+      res.send(result);
+    });
     //course collection handling
     //instructors collection handling
     app.get("/instructors", async (req, res) => {
@@ -167,7 +205,7 @@ async function run() {
     });
     app.post("/instructor/:id/reviews", async (req, res) => {
       const { id } = req.params;
-      const { studentName, rating, comment,studentEmail } = req.body;
+      const { studentName, rating, comment,studentEmail,studentImage } = req.body;
 
       try {
         // Example of storing review in MongoDB
@@ -179,6 +217,7 @@ async function run() {
                 studentName,
                 rating: parseInt(rating),
                 studentEmail,
+                studentImage,
                 comment,
                 createdAt: new Date(),
               },

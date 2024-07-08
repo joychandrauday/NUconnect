@@ -12,6 +12,9 @@ import CourseDetails from "../pages/Courses/CourseDetails";
 import DepartMentWise from "../pages/Courses/DepartMentWise";
 import Instructors from "../pages/Instructors/Instructors";
 import InstructorsDetails from "../pages/Instructors/InstructorsDetails";
+import AddCourses from "../pages/Home/Syllabus/AddSyllabus";
+import AddSyllabus from "../pages/Home/Syllabus/AddSyllabus";
+import AddAcademicCourses from "../pages/Courses/AddAcademicCourses";
 
 export const router = createBrowserRouter([
   {
@@ -50,6 +53,18 @@ export const router = createBrowserRouter([
       {
         path: "/instructor/:id",
         element: <InstructorsDetails />,
+      },
+      {
+        path: "/addsyllabus",
+        element: <AddSyllabus />,
+      },
+      {
+        path: "/addsyllabus/:slug",
+        element: <AddSyllabus />,
+      },
+      {
+        path: "/add-courses",
+        element: <AddAcademicCourses />,
       },
     ],
   },

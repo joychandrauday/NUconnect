@@ -89,7 +89,7 @@ const SyllabusHomeSlider = () => {
         {
           subjects.map((subject) =>{
             return (
-              <Link to={`/syllabus/${subject.slug}`} key={subject._id} className="bg-accent p-4 flex flex-col items-center justify-center h-full hover:scale-95 gap-2 text-center">
+              <Link to={`/syllabus/${subject.slug}`} key={subject._id} className="bg-accent p-4 flex flex-col items-center justify-center h-full hover:scale-95 transition-scale duration-100 gap-2 text-center">
                 <img src={subject?.icon} alt={subject.subjectName} className="w-2/6"/>
                 <h3 className="text-2xl font-bold ">{subject?.subjectName}({subject.subjectCode})</h3>
               </Link>

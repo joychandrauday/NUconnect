@@ -86,7 +86,7 @@ const SingleCourse = ({ course }) => {
             )}
           </span>
         </div>
-        <button className="w-full btn border-none bg-gradient-to-r from-primary to-secondary text-white font-bold rounded shadow-md hover:bg-gradient-to-l transition-all duration-300">
+        <button className="w-full btn bg-gradient-to-r border border-gray-600 from-primary to-slate-900  text-white font-bold rounded shadow-md hover:bg-gradient-to-l transition-all duration-300">
           <Link to={`/course/${_id}`}>View Details</Link>
         </button>
       </div>

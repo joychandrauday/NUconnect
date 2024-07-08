@@ -7,11 +7,19 @@ import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
 import "react-tabs/style/react-tabs.css";
 import SingleDetailSyllabus from "./SingleDetailSyllabus";
 import { TbFlagPlus, TbPlus } from "react-icons/tb";
+import SingleCourse from "../../Courses/SingleCourse";
 
 const SyllabusSingle = () => {
   const { slug } = useParams();
-  const navigate=useNavigate()
+  const navigate = useNavigate();
   const axiosPublic = useAxiosPublic();
+  const { data: courses = [] } = useQuery({
+    queryKey: ["courses"],
+    queryFn: async () => {
+      const res = await axiosPublic.get(`/courses/${slug}`);
+      return res.data;
+    },
+  });
   const {
     data: subject = [],
     isLoading,
@@ -23,7 +31,7 @@ const SyllabusSingle = () => {
       return res.data;
     },
   });
-
+  console.log(subject);
   if (isLoading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
@@ -42,13 +50,13 @@ const SyllabusSingle = () => {
             no syllabus found
           </h1>
           <button
-              onClick={() => navigate('/')} 
-              className='flex items-center justify-center w-1/2 px-5 py-1 text-gray-700 transition-colors duration-200 bg-white border rounded-lg gap-x-2 sm:w-auto   hover:bg-gray-100 '
-            >
-              <TbPlus></TbPlus>
+            onClick={() => navigate(`/addsyllabus/${slug}`)}
+            className="flex items-center justify-center w-1/2 px-5 py-1 text-gray-700 transition-colors duration-200 bg-white border rounded-lg gap-x-2 sm:w-auto   hover:bg-gray-100 "
+          >
+            <TbPlus></TbPlus>
 
-              <span>Add A Syllabus</span>
-            </button>
+            <span>Add A Syllabus</span>
+          </button>
         </div>
       </div>
     );
@@ -90,6 +98,21 @@ const SyllabusSingle = () => {
           </TabPanel>
         </Tabs>
       </div>
+      {courses?.length > 0 ? (
+        <div className="mt-12">
+          <h1 className="text-2xl font-bold text-center pt-4 pb-10 capitalize">
+            {subject.slug} academic courses.({courses?.length})
+          </h1>
+          <div className="grid grid-cols-3 gap-4 container mx-auto">
+            {courses.map((course) => (
+              <SingleCourse course={course} key={course._id} />
+              // console.log(course.course)
+            ))}
+          </div>
+        </div>
+      ) : (
+        ""
+      )}
     </div>
   );
 };
