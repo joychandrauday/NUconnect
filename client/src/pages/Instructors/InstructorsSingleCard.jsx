@@ -14,8 +14,8 @@ const InstructorsSingleCard = ({ instructor }) => {
           className="w-full h-64 object-cover object-center"
         />
         <span className="badge absolute top-2 right-0 badge-primary font-bold capitalize text-white rounded-none shadow-sm text-md">
-              {department}
-            </span>
+          {department}
+        </span>
         <div className="p-6">
           <h2 className="text-2xl font-semibold text-white mb-2">{name}</h2>
           <div className="flex items-center gap-2 mb-4 ">
@@ -34,7 +34,6 @@ const InstructorsSingleCard = ({ instructor }) => {
                 </svg>
               ))}
             </div>
-            
           </div>
 
           <p className="text-gray-300 mb-4">

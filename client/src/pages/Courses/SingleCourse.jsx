@@ -2,8 +2,11 @@ import React from "react";
 import { FaCheck, FaClock, FaPlay, FaStar, FaUser } from "react-icons/fa";
 import { TbCheck, TbClock, TbPlayerPlay, TbStar, TbUser } from "react-icons/tb";
 import { Link, ScrollRestoration } from "react-router-dom";
+import useInstructor from './../../hooks/useInstructor';
 
 const SingleCourse = ({ course }) => {
+  const instructorId=course?.instructor;
+  const {teacher}=useInstructor(instructorId)
   const {
     _id,
     title,
@@ -51,10 +54,10 @@ const SingleCourse = ({ course }) => {
         <p className="mb-2">
           Instructor:{" "}
           <Link
-            to={`/instructor/${instructor.id}`}
+            to={`/instructor/${instructor}`}
             className="text-blue-700 font-bold"
           >
-            {instructor?.name}
+            {teacher?.name}
           </Link>
         </p>
         <div className="flex justify-between items-center mb-2">

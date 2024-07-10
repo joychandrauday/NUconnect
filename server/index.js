@@ -48,6 +48,7 @@ async function run() {
     .db("nuconnect")
     .collection("detailedSyllabus");
   const courseCollection = client.db("nuconnect").collection("courses");
+  const usersCollection = client.db("nuconnect").collection("users");
   const instructorsCollection = client
     .db("nuconnect")
     .collection("instructors");
@@ -68,9 +69,87 @@ async function run() {
         })
         .send({ success: true });
     });
+    app.get("/all-users", async (req, res) => {
+      const cursor = usersCollection.find();
+      const result = await cursor.toArray();
+      res.send(result);
+    });
 
+    app.post("/users", async (req, res) => {
+      const user = req.body;
+      const query = { email: user.email };
+      const existingUser = await usersCollection.findOne(query);
+      if (existingUser) {
+        return;
+      }
+      const result = await usersCollection.insertOne(user);
+      res.send(result);
+    });
+    app.get("/all-users", async (req, res) => {
+      const cursor = usersCollection.find();
+      const result = await cursor.toArray();
+      res.send(result);
+    });
+    app.get("/users/:id", async (req, res) => {
+      const id = req.params.id;
+      const query = { _id: new ObjectId(id) };
+      const result = await usersCollection.findOne(query);
+      res.send(result);
+    });
+    app.delete("/users/:id", async (req, res) => {
+      const id = req.params.id;
+      const query = { _id: new ObjectId(id) };
+      const result = await usersCollection.deleteOne(query);
+      res.send(result);
+    });
+    app.get("/user", async (req, res) => {
+      let query = {};
+      if (req.query?.email) {
+        query = { email: req.query?.email };
+      }
+      const result = await usersCollection.findOne(query);
+      res.send(result);
+    });
+    //users
     // Logout
     app.get("/logout", async (req, res) => {
+      app.get("/all-users", async (req, res) => {
+        const cursor = usersCollection.find();
+        const result = await cursor.toArray();
+        res.send(result);
+      });
+
+      app.post("/users", async (req, res) => {
+        const user = req.body;
+        const query = { email: user.email };
+        const existingUser = await usersCollection.findOne(query);
+        if (existingUser) {
+          return;
+        }
+        const result = await usersCollection.insertOne(user);
+        res.send(result);
+      });
+      app.get("/users/:id", async (req, res) => {
+        const id = req.params.id;
+        const query = { _id: new ObjectId(id) };
+        const result = await usersCollection.findOne(query);
+        res.send(result);
+      });
+      app.delete("/users/:id", async (req, res) => {
+        const id = req.params.id;
+        const query = { _id: new ObjectId(id) };
+        const result = await usersCollection.deleteOne(query);
+        res.send(result);
+      });
+      app.get("/user", async (req, res) => {
+        let query = {};
+        if (req.query?.email) {
+          query = { email: req.query?.email };
+        }
+        const result = await usersCollection.findOne(query);
+        res.send(result);
+      });
+      //users
       try {
         res
           .clearCookie("token", {
@@ -130,13 +209,19 @@ async function run() {
     app.put("/detailed-syllabus/courses/:courseCode", (req, res) => {
       const courseCode = req.params.courseCode;
       const updatedCourse = req.body;
-      
+
       // Find the course by courseCode and update it
       let found = false;
       detailedSyllCollection.forEach((syllabus) => {
-        if (syllabus.details && syllabus.details.firstYear && syllabus.details.firstYear.courses[0]) {
+        if (
+          syllabus.details &&
+          syllabus.details.firstYear &&
+          syllabus.details.firstYear.courses[0]
+        ) {
           const courses = syllabus.details.firstYear.courses;
-          const courseIndex = courses.findIndex((course) => course.courseCode === courseCode);
+          const courseIndex = courses.findIndex(
+            (course) => course.courseCode === courseCode
+          );
           if (courseIndex !== -1) {
             // Update the course with updatedCourse
             courses[courseIndex] = updatedCourse;
@@ -146,14 +231,16 @@ async function run() {
         }
         // Add checks for other years (secondYear, thirdYear, fourthYear) if needed
       });
-    
+
       if (found) {
-        res.status(200).json({ message: "Course updated successfully", updatedCourse });
+        res
+          .status(200)
+          .json({ message: "Course updated successfully", updatedCourse });
       } else {
         res.status(404).json({ message: "Course not found" });
       }
     });
-    
+
     app.get("/subject/:slug", async (req, res) => {
       const slug = req.params.slug;
       const query = { slug: slug };
@@ -205,7 +292,8 @@ async function run() {
     });
     app.post("/instructor/:id/reviews", async (req, res) => {
       const { id } = req.params;
-      const { studentName, rating, comment,studentEmail,studentImage } = req.body;
+      const { studentName, rating, comment, studentEmail, studentImage } =
+        req.body;
 
       try {
         // Example of storing review in MongoDB
