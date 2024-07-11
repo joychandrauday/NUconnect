@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Link, ScrollRestoration, useNavigate, useParams } from "react-router-dom";
 import useAxiosPublic from "../../hooks/useAxiosPublic";
 import { useQuery } from "@tanstack/react-query";
@@ -17,12 +17,13 @@ import "react-tabs/style/react-tabs.css";
 import { RxCrossCircled } from "react-icons/rx";
 import { MdQuiz } from "react-icons/md";
 import TeacherComponent from "./TeacherComponent";
+import { AuthContext } from './../../providers/AuthProvider';
 
 const CourseDetails = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const axiosPublic = useAxiosPublic();
-
+  const {user}=useContext(AuthContext);
   const {
     data: course,
     isLoading,
@@ -49,6 +50,7 @@ const CourseDetails = () => {
   }
 
   const {
+    _id,
     title,
     description,
     instructor,
@@ -68,10 +70,12 @@ const CourseDetails = () => {
     active,
     liveCourse
   } = course;
-
+  const handleEnroll=(_id)=>{
+    console.log('po');
+  }
   return (
     <div className="container mx-auto py-12">
-      <div className="flex flex-col lg:flex-row gap-4">
+      <div className="flex flex-col-reverse lg:flex-row gap-4">
         <div className="w-full lg:w-2/3 text-left flex flex-col gap-2 bg-white bg-opacity-80 p-6 rounded-lg backdrop-filter backdrop-blur-lg shadow-lg">
           <h1 className="text-4xl font-bold capitalize text-gradient-to-r from-purple-500 to-primary">
             {title}
@@ -251,16 +255,17 @@ const CourseDetails = () => {
               }
               </span>
               <button
-                onClick={() => navigate(`/enroll/${id}`)}
+                onClick={() => handleEnroll()}
                 className={`flex items-center justify-center px-5 py-3  w-full mx-auto transition-colors duration-200 capitalize font-bold text-white ${
-                  active
+                  active && user
                     ? "bg-gradient-to-r from-[#003366] to-primary shadow-lg hover:bg-gradient-to-l"
                     : "bg-gray-400 cursor-not-allowed opacity-50"
                 }`}
-                disabled={!active}
+                disabled={!active || !user}
               >
                 <FaGraduationCap className="mr-2 text-2xl" />
-                Enroll Now
+                {user? 'Enroll Now':'you must log in to enroll!!'}
+                {user?'':<Link to="/login" className="text-primary link ml-4">Sign In</Link>}
               </button>
             </div>
           </div>
