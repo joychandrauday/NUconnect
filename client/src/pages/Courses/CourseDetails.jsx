@@ -1,5 +1,10 @@
 import React, { useContext } from "react";
-import { Link, ScrollRestoration, useNavigate, useParams } from "react-router-dom";
+import {
+  Link,
+  ScrollRestoration,
+  useNavigate,
+  useParams,
+} from "react-router-dom";
 import useAxiosPublic from "../../hooks/useAxiosPublic";
 import { useQuery } from "@tanstack/react-query";
 
@@ -17,13 +22,13 @@ import "react-tabs/style/react-tabs.css";
 import { RxCrossCircled } from "react-icons/rx";
 import { MdQuiz } from "react-icons/md";
 import TeacherComponent from "./TeacherComponent";
-import { AuthContext } from './../../providers/AuthProvider';
+import { AuthContext } from "./../../providers/AuthProvider";
 
 const CourseDetails = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const axiosPublic = useAxiosPublic();
-  const {user} =useContext(AuthContext)
+  const { user } = useContext(AuthContext);
   const {
     data: course,
     isLoading,
@@ -68,18 +73,21 @@ const CourseDetails = () => {
     notes,
     quizzes,
     active,
-    liveCourse
+    liveCourse,
   } = course;
-  const userEmail=user?.email;
-  const handleEnroll= async()=>{
+  const userEmail = user?.email;
+  const handleEnroll = async () => {
     try {
-      const response = await axiosPublic.post(`/enroll/${course._id}`, { userEmail });
+      const response = await axiosPublic.post(`/enroll/${course._id}`, {
+        userEmail,
+      });
       alert(response.data);
+    
     } catch (error) {
-      console.error('Error enrolling in course:', error);
-      alert('Error enrolling in course');
+      console.error("Error enrolling in course:", error);
+      alert("Error enrolling in course");
     }
-  }
+  };
   return (
     <div className="container mx-auto py-12">
       <div className="flex flex-col-reverse lg:flex-row gap-4">
@@ -154,8 +162,8 @@ const CourseDetails = () => {
                 </TabList>
 
                 <TabPanel>
-                  {modules.map((module) => (
-                    <div key={module.moduleId}>
+                  {modules.map((module,index) => (
+                    <div key={index}>
                       <div className="collapse collapse-arrow">
                         <input
                           type="radio"
@@ -174,8 +182,8 @@ const CourseDetails = () => {
                 </TabPanel>
 
                 <TabPanel>
-                  {faqs.map((faq) => (
-                    <div key={faq.moduleId}>
+                  {faqs.map((faq,index) => (
+                    <div key={index}>
                       <div className="collapse collapse-arrow">
                         <input
                           type="radio"
@@ -194,8 +202,8 @@ const CourseDetails = () => {
                 </TabPanel>
 
                 <TabPanel>
-                  {reviews.map((review) => (
-                    <div key={review.moduleId}>
+                  {reviews.map((review,index) => (
+                    <div key={index}>
                       <div className="card border shadow-xl mb-4 ">
                         <div className="card-body">
                           <div className="flex items-center gap-6">
@@ -229,7 +237,7 @@ const CourseDetails = () => {
                       to={`/instructor/${instructor}`}
                       className="card bg-base-100 hover:translate-y-[-4px] transition-translate hover:shadow-primary duration-300 shadow-lg border mb-4"
                     >
-                      <TeacherComponent instructor={instructor}/>
+                      <TeacherComponent instructor={instructor} />
                     </Link>
                   </div>
                 </TabPanel>
@@ -257,9 +265,7 @@ const CourseDetails = () => {
                 {department}
               </Link>
               <span className="font-semibold text-md absolute top-[73px] shadow left-0 p-4 badge bg-purple-500 text-white border-none rounded-none">
-                {
-                  liveCourse? 'Live Class':'recorded class'
-              }
+                {liveCourse ? "Live Class" : "recorded class"}
               </span>
               <button
                 onClick={() => handleEnroll(_id)}
@@ -271,14 +277,20 @@ const CourseDetails = () => {
                 disabled={!active || !user}
               >
                 <FaGraduationCap className="mr-2 text-2xl" />
-                {user? 'Enroll Now':'you must log in to enroll!!'}
-                {user?'':<Link to="/login" className="text-primary link ml-4">Sign In</Link>}
+                {user ? "Enroll Now" : "you must log in to enroll!!"}
+                {user ? (
+                  ""
+                ) : (
+                  <Link to="/login" className="text-primary link ml-4">
+                    Sign In
+                  </Link>
+                )}
               </button>
             </div>
           </div>
         </div>
       </div>
-      <ScrollRestoration/>
+      <ScrollRestoration />
     </div>
   );
 };

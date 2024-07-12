@@ -259,6 +259,7 @@ async function run() {
       const id = req.params.id;
       const query = { _id: new ObjectId(id) };
       const result = await courseCollection.findOne(query);
+      console.log(result);
       res.send(result);
     });
     app.get("/courses/:department", async (req, res) => {
@@ -322,8 +323,8 @@ async function run() {
 
       try {
         // Find the user by ID
-        const user = await users.findOne({ _id: new ObjectId(userId) });
-
+        const user = await users.findOne({ email: userEmail });
+        console.log(user);
         // Get the enrolled courses
         const enrolledCourses = await courses
           .find({

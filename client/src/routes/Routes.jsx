@@ -15,6 +15,7 @@ import InstructorsDetails from "../pages/Instructors/InstructorsDetails";
 import AddCourses from "../pages/Home/Syllabus/AddSyllabus";
 import AddSyllabus from "../pages/Home/Syllabus/AddSyllabus";
 import AddAcademicCourses from "../pages/Courses/AddAcademicCourses";
+import About from "../pages/About/About";
 
 export const router = createBrowserRouter([
   {
@@ -25,6 +26,10 @@ export const router = createBrowserRouter([
       {
         path: "/",
         element: <Home />,
+      },
+      {
+        path: "/about-us",
+        element: <About />,
       },
       {
         path: "/syllabus/:slug",
