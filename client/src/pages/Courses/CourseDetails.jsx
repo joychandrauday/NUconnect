@@ -23,7 +23,7 @@ const CourseDetails = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const axiosPublic = useAxiosPublic();
-  const {user}=useContext(AuthContext);
+  const {user} =useContext(AuthContext)
   const {
     data: course,
     isLoading,
@@ -70,8 +70,15 @@ const CourseDetails = () => {
     active,
     liveCourse
   } = course;
-  const handleEnroll=(_id)=>{
-    console.log('po');
+  const userEmail=user?.email;
+  const handleEnroll= async()=>{
+    try {
+      const response = await axiosPublic.post(`/enroll/${course._id}`, { userEmail });
+      alert(response.data);
+    } catch (error) {
+      console.error('Error enrolling in course:', error);
+      alert('Error enrolling in course');
+    }
   }
   return (
     <div className="container mx-auto py-12">
@@ -255,7 +262,7 @@ const CourseDetails = () => {
               }
               </span>
               <button
-                onClick={() => handleEnroll()}
+                onClick={() => handleEnroll(_id)}
                 className={`flex items-center justify-center px-5 py-3  w-full mx-auto transition-colors duration-200 capitalize font-bold text-white ${
                   active && user
                     ? "bg-gradient-to-r from-[#003366] to-primary shadow-lg hover:bg-gradient-to-l"

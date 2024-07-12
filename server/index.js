@@ -277,6 +277,66 @@ async function run() {
       const result = await courseCollection.insertOne(course);
       res.send(result);
     });
+    // Enroll in a course
+    app.post("/enroll/:id", async (req, res) => {
+      // const db = client.db("edutech");
+      const courses = courseCollection;
+      const users = usersCollection;
+      const { id } = req.params;
+      const { userEmail } = req.body; // from body
+      try {
+        // Find the course by ID
+        const course = await courses.findOne({ _id: new ObjectId(id) });
+
+        // Check if the course exists and has available seats
+        if (!course) {
+          return res.status(404).send("Course not found");
+        }
+        if (course.seatsLeft <= 0) {
+          return res.status(400).send("No seats available");
+        }
+
+        // Update the user's enrolled courses
+        await users.updateOne(
+          { email: userEmail },
+          { $push: { enrolledCourses: id } }
+        );
+
+        // Update the course's totalEnrolled and seatsLeft
+        await courses.updateOne(
+          { _id: new ObjectId(id) },
+          {
+            $inc: { totalEnrolled: 1, seatsLeft: -1 },
+          }
+        );
+
+        res.status(200).send("Enrolled successfully");
+      } catch (err) {
+        res.status(500).send("Error enrolling in course: " + err);
+      }
+    });
+    app.get("/user/:userEmail/enrolledCourses", async (req, res) => {
+      const users = usersCollection;
+      const courses = courseCollection;
+      const { userEmail } = req.params;
+
+      try {
+        // Find the user by ID
+        const user = await users.findOne({ _id: new ObjectId(userId) });
+
+        // Get the enrolled courses
+        const enrolledCourses = await courses
+          .find({
+            _id: { $in: user.enrolledCourses.map((id) => new ObjectId(id)) },
+          })
+          .toArray();
+
+        res.status(200).json(enrolledCourses);
+      } catch (err) {
+        res.status(500).send("Error fetching enrolled courses: " + err);
+      }
+    });
+
     //course collection handling
     //instructors collection handling
     app.get("/instructors", async (req, res) => {
