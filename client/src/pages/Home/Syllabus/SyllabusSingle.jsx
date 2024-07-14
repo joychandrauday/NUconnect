@@ -31,7 +31,6 @@ const SyllabusSingle = () => {
       return res.data;
     },
   });
-  console.log(subject);
   if (isLoading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
@@ -106,7 +105,6 @@ const SyllabusSingle = () => {
           <div className="grid grid-cols-3 gap-4 container mx-auto">
             {courses.map((course) => (
               <SingleCourse course={course} key={course._id} />
-              // console.log(course.course)
             ))}
           </div>
         </div>

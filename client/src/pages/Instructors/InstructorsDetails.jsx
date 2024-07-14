@@ -15,7 +15,6 @@ const InstructorDetails = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const axiosPublic = useAxiosPublic();
-  console.log(user);
   const {
     data: instructor,
     isLoading,

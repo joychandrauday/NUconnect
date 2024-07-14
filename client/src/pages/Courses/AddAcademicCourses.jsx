@@ -78,7 +78,6 @@ const AddAcademicCourses = () => {
     } else {
       toast.success('something went wrong.')
     }
-    console.log(result);
     // You can use axios or fetch to send data to your backend API
   };
 

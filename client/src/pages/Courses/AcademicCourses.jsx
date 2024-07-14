@@ -27,7 +27,6 @@ const AcademicCourses = () => {
   if (isError) {
     return <div>Error fetching packages data</div>;
   }
-  console.log(courses);
   return (
     <div>
       <h1 className="text-3xl font-bold text-center pt-4 pb-10 capitalize">
@@ -37,7 +36,6 @@ const AcademicCourses = () => {
         {
             courses.map(course =>(
                 <SingleCourse course={course} key={course._id}/>
-                // console.log(course.course)
             ))
         }
       </div>

@@ -4,7 +4,6 @@ import useInstructor from "../../hooks/useInstructor";
 const TeacherComponent = ({ instructor }) => {
 
   const { teacher } = useInstructor(instructor);
-  console.log(teacher);
   return (
     <div>
       <div className="card-body">

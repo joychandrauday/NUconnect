@@ -24,7 +24,6 @@ const Login = () => {
       navigate(from);
       toast.success("Signup Successful");
     } catch (err) {
-      console.log(err);
       toast.error(err.message);
       setLoading(false);
     }

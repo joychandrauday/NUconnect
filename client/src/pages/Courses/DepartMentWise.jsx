@@ -29,7 +29,6 @@ const DepartMentWise = () => {
   if (isError) {
     return <div>Error fetching packages data</div>;
   }
-  console.log(department);
   return (
     <div>
       <div>

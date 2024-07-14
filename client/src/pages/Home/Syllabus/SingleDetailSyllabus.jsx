@@ -21,7 +21,6 @@ const SingleDetailSyllabus = ({ courses }) => {
       toast("Updated course:", response.data);
 
       // Assuming successful update, you would update the state or reload data
-      console.log("Updated course:", updatedCourse);
 
       // Clear edit state after successful update
       setEditCourse(null);
