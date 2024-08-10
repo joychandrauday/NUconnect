@@ -3,7 +3,7 @@ import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import { useQuery } from "@tanstack/react-query";
-import icon from "../../../assets/images/connections.png"
+import icon from "../../../assets/images/connections.png";
 import { Link } from "react-router-dom";
 
 const SyllabusHomeSlider = () => {
@@ -19,6 +19,7 @@ const SyllabusHomeSlider = () => {
       return res.data;
     },
   });
+  console.log(subjects);
   if (isLoading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
@@ -86,16 +87,26 @@ const SyllabusHomeSlider = () => {
         slidesToSlide={1}
         swipeable
       >
-        {
-          subjects.map((subject) =>{
-            return (
-              <Link to={`/syllabus/${subject.slug}`} key={subject._id} className="bg-accent p-4 flex flex-col items-center justify-center h-full hover:scale-95 transition-scale duration-100 gap-2 text-center">
-                <img src={subject?.icon} alt={subject.subjectName} className="w-2/6"/>
-                <h3 className="text-2xl font-bold ">{subject?.subjectName}({subject.subjectCode})</h3>
-              </Link>
-            )
-          })
-        }
+        {subjects.map((subject) => {
+          return (
+            <Link
+              to={`/syllabus/${subject.slug}`}
+              key={subject._id}
+              className="bg-accent p-4 flex flex-col items-center justify-center h-52 hover:bg-secondary transition-scale duration-100 gap-2 text-center"
+            >
+              <div className="wrapImg flex items-center justify-center">
+                <img
+                  src={subject?.icon}
+                  alt={subject.subjectName}
+                  className="w-1/6"
+                />
+              </div>
+              <h3 className="text-2xl font-bold ">
+                {subject?.subjectName}({subject.subjectCode})
+              </h3>
+            </Link>
+          );
+        })}
       </Carousel>
     </div>
   );
